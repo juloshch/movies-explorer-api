@@ -12,6 +12,7 @@ const {
   createUser,
   login,
 } = require('./controllers/users');
+const defaultRouter = require('./routes/default');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
 
@@ -46,6 +47,7 @@ app.post('/signup', celebrate({
 app.use(auth);
 app.use('/users/', usersRouter);
 app.use('/movies/', moviesRouter);
+app.use('/*', defaultRouter);
 
 app.use(errorLogger);
 app.use(errors());
