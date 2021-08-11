@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -29,13 +29,13 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 app.use(bodyParser.json());
 app.use(requestLogger);
 
-app.post('/api/signin', celebrate({
+app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
 }), login);
-app.post('/api/signup', celebrate({
+app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().required().email(),
@@ -44,8 +44,8 @@ app.post('/api/signup', celebrate({
 }), createUser);
 
 app.use(auth);
-app.use('/api/users/', usersRouter);
-app.use('/api/movies/', moviesRouter);
+app.use('/users/', usersRouter);
+app.use('/movies/', moviesRouter);
 
 app.use(errorLogger);
 app.use(errors());
